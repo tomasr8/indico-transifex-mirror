@@ -2,6 +2,8 @@ stages:
   - build
   - deploy
 
+# https://gitlab.cern.ch/gitlabci-examples/build_docker_image
+# https://docs.gitlab.com/ee/ci/docker/using_kaniko.html
 build:
   stage: build
   image:
@@ -14,17 +16,22 @@ build:
       --dockerfile "${CI_PROJECT_DIR}/Dockerfile"
       --destination "${CI_REGISTRY_IMAGE}:latest"
 
-# deploy:
-#   stage: deploy
-#   variables:
-#     APP_NAME: "indico-transifex-mirror"
-#     NAMESPACE: "indico-transifex-mirror"
-#     OPENSHIFT_SERVER: https://api.paas.okd.cern.ch
-#   image: gitlab-registry.cern.ch/paas-tools/openshift-client:latest
-#   only:
-#     - master
-#   script:
-#     # Adding || true to disable the error message when the image already exists
-#     - oc import-image ${APP_NAME} --from="${CI_REGISTRY_IMAGE}:latest" --confirm --token=${DEPLOY_TOKEN} --server=${OPENSHIFT_SERVER} -n ${NAMESPACE} || true
-#     - oc tag "${CI_REGISTRY_IMAGE}:latest" "${APP_NAME}:latest" --token=${DEPLOY_TOKEN} --server=${OPENSHIFT_SERVER} -n ${NAMESPACE}
-
+# https://paas.docs.cern.ch/2._Deploy_Applications/Deploy_Docker_Image/2-automatic-redeployments/#integrate-redeployment-in-ci-workflow
+deploy:
+  stage: deploy
+  variables:
+    APP_NAME: "test-indico-transifex-mirror"
+    NAMESPACE: "test-indico-transifex-mirror"
+    OPENSHIFT_SERVER: https://api.paas.okd.cern.ch
+  image: gitlab-registry.cern.ch/paas-tools/openshift-client:latest
+  only:
+    - master
+  variables:
+    SERVER: https://api.paas.okd.cern.ch
+    PROJECT: test-indico-transifex-mirror
+    APP_NAME: indico-transifex-mirror
+  script:
+    - oc login $SERVER --token=$DEPLOY_TOKEN
+    - oc project $PROJECT
+    - oc import-image $APP_NAME --all
+    - sleep 10 && oc rollout status deployment/$APP_NAME
