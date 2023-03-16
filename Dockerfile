@@ -2,7 +2,7 @@ FROM nginxinc/nginx-unprivileged:stable-alpine
 
 USER root
 
-RUN set -ex && apk add --no-cache bash zip
+RUN set -ex && apk add --no-cache bash sed zip
 
 RUN rm /etc/nginx/conf.d/default.conf
 
@@ -12,7 +12,7 @@ RUN cd /opt/tx && curl -o- https://raw.githubusercontent.com/transifex/cli/maste
 
 COPY .transifexrc /opt/tx/
 COPY tx-config /opt/tx/.tx/config
-COPY index.html /opt/tx/html/
+COPY index.html.template indico.png /opt/tx/html/
 
 COPY nginx.conf /etc/nginx/conf.d/
 

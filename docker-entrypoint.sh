@@ -8,7 +8,13 @@ pull_translations() {
     zip -r translations.zip translations/
 }
 
+set_last_updated() {
+    last_update=$(date +"%Y-%m-%dT%H:%M:%S%z")
+    sed "s/\${LAST_UPDATE}/$last_update/g" /opt/tx/html/index.html.template > /opt/tx/html/index.html
+}
+
 pull_translations
+set_last_updated
 echo "Starting nginx..."
 nginx -g "daemon off;" &
 
@@ -17,4 +23,5 @@ while true; do
     echo "[$now] Sleeping for 15m..."
     sleep 15m
     pull_translations
+    set_last_updated
 done

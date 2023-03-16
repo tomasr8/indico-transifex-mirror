@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Indico Transifex mirror</title>
+    <style>
+      body {
+        width: 35em;
+        margin: 2em auto 0 auto;
+      }
+
+      .header {
+        font-family: sans-serif;
+        display: flex;
+        align-items: center;
+        gap: 2em;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="header">
+      <img src="indico.png" height="80" />
+      <h1>Transifex mirror</h1>
+    </div>
+    <p>
+      This is a public mirror for the Indico translations on
+      <a href="https://www.transifex.com/indico" target="_blank">Transifex</a>.
+    </p>
+
+    <p>
+      You can download the translations
+      <a href="translations.zip">here as a single zip file</a>.
+    </p>
+
+    <p>The translations are updated once every <b>15 minutes</b>.</p>
+    <p>Last update: <b>${LAST_UPDATE}</b></p>
+
+    <hr />
+
+    <p>
+      If you use this mirror to manually download the translations, you should
+      unzip the file and place the contents inside the
+      <code>indico/translations</code>
+      folder in your Indico repository.
+    </p>
+
+    <p>
+      The source code can be found in this
+      <a
+        href="https://github.com/tomasr8/indico-transifex-mirror"
+        target="_blank"
+        >repository</a
+      >.
+    </p>
+  </body>
+</html>
