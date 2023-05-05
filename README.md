@@ -2,7 +2,7 @@
 
 This repo provides a public mirror for the Indico translations on Transifex. Normally, to access the translations you need an account and/or an API token. Since this mirror is public, no authentication is necessary.
 
-The mirror as available at [https://test-indico-transifex-mirror.app.cern.ch](https://test-indico-transifex-mirror.app.cern.ch). The translations are provided as a [single zip file](https://test-indico-transifex-mirror.app.cern.ch/translations.zip).
+The mirror as available at [https://indico-transifex-mirror.app.cern.ch](https://indico-transifex-mirror.app.cern.ch). The translations are provided as a [single zip file](https://indico-transifex-mirror.app.cern.ch/translations.zip).
 
 The usecase for this mirror is automating translation-related tasks. It is currently used with the [development Docker setup](https://github.com/indico/indico-containers) which uses this mirror so that you don't need to provide an API token when running the setup.
 
